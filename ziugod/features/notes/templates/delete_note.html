@@ -1,0 +1,14 @@
+{% extends "components/base.html" %}
+{% block title %}- Delete note {{ note.id }}{% endblock %}
+{% block main %}
+    <h1>Delete Note</h1>
+    <p>Are you sure you want to delete this note?</p>
+    <span class="text-warning">This action cannot be undone.</span>
+    <p>Title: {{ note.title }}</p>
+    <p>Summary: {{ note.age }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, Delete</button>
+        <a href="{% url 'read_note' note.id %}">Cancel</a>
+    </form>
+{% endblock %}

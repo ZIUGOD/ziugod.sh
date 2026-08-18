@@ -1,0 +1,8 @@
+{% extends "components/base.html" %}
+{% block title %}- {{ note.title|default:"Some note" }}{{ notes.title|length }}{% endblock %}
+{% block main %}
+    <h1>{{ note.title }}</h1>
+    <p>{{ note.content }}</p>
+    <button><a href="{% url 'update_note' note.id %}">Update Note</a></button>
+    <button><a href="{% url 'delete_note' note.id %}">Delete Note</a></button>
+{% endblock %}

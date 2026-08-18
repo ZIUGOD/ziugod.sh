@@ -1,0 +1,21 @@
+{% extends "components/base.html" %}
+{% block title %}- Notes{% endblock %}
+{% block main %}
+    {% autoescape off %}
+        {{ body }}
+    {% endautoescape %}
+    {% if notes %}
+        <ul>
+            {% for note in notes %}
+                <li class="d-flex flex-row">
+                    <a href="{% url 'read_note' note.id %}">{{ note.title }}</a>
+                    {% if note.was_published_recently %}
+                        <span class="no-select text-warning">new</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Notes not found.</p>
+    {% endif %}
+{% endblock %}

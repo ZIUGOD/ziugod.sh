@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <meta name="keywords" content="ZIUGOD, notes, web app, personal notes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="ZIUGOD - my personal web notes app" />
+        <meta name="author" content="ZIUGOD" />
+        <meta http-equiv="refresh" content="300" />
+        <link rel="icon"
+              type="image/svg+xml"
+              href="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon-filled-256.png" />
+        <title>
+            ZIUGOD
+            {% block title %}{% endblock %}
+        </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+              rel="stylesheet"
+              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+              crossorigin="anonymous" />
+        {% block head %}{% endblock %}
+        <style>
+            .no-select {
+                user-select: none;
+            }
+        </style>
+    </head>
+    <body class="container bg-dark text-light">
+        <header>
+            {% block header %}
+                {% include "components/header.html" %}
+            {% endblock %}
+        </header>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        <footer>
+            {% block footer %}
+                {% include "components/footer.html" %}
+            {% endblock %}
+        </footer>
+    </body>
+</html>
