@@ -1,5 +1,7 @@
+from django.conf import settings  # type: ignore
 from django.shortcuts import redirect, render, get_object_or_404  # type: ignore
-from django.contrib.auth.decorators import login_required # type: ignore
+from django.contrib.auth.decorators import login_required  # type: ignore
+from django.contrib.auth import authenticate, login, logout  # type: ignore
 from django.http import Http404, HttpResponse  # type: ignore
 from features.notes.forms import NoteForm  # type: ignore
 from .models import Note
@@ -15,8 +17,11 @@ def index(request):
     else:
         return HttpResponse("Method not allowed", status=405)
 
+
 @login_required
 def create_note(request):
+    if not request.user.is_authenticated:
+        return redirect(f"{settings.LOGIN}?next={request.path}")
     if request.method == "POST":
         form = NoteForm(request.POST)
 
@@ -38,6 +43,7 @@ def read_note(request, note_id):
             context = {
                 "note": get_object_or_404(Note, pk=note_id),
             }
+
         else:
             return HttpResponse("Method not allowed", status=405)
 
@@ -45,6 +51,7 @@ def read_note(request, note_id):
         raise Http404("Note does not exist")
 
     return render(request, "read_note.html", context)
+
 
 @login_required
 def update_note(request, note_id):
@@ -80,3 +87,23 @@ def delete_note(request, note_id):
 
     except Note.DoesNotExist:
         raise Http404("Note does not exist")
+
+
+def login_view(request):
+    if request.method == "POST":
+        user = authenticate(
+            request,
+            username=request.POST["username"],
+            password=request.post["password"],
+        )
+
+        if user:
+            login(request, user)
+
+        return redirect("index")
+
+    return render(request, "index.html")
+
+
+def logout_view(request):
+    logout(request)

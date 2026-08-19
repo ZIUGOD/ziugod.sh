@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from os import environ, getenv, path
 from pathlib import Path
-from dotenv import load_dotenv # type: ignore
+from dotenv import load_dotenv  # type: ignore
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,9 +82,9 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
-PASSWORD_RESET_TIMEOUT = 3600 * 24 # 1 day in seconds
+PASSWORD_RESET_TIMEOUT = 3600 * 24  # 1 day in seconds
 
-AUTH_PASSWORD_VALIDATORS = [ # https://docs.djangoproject.com/pt-br/6.0/topics/auth/passwords/#password-validation
+AUTH_PASSWORD_VALIDATORS = [  # https://docs.djangoproject.com/pt-br/6.0/topics/auth/passwords/#password-validation
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
@@ -119,5 +119,3 @@ STATICFILES_DIRS = [BASE_DIR / "static/"]
 LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "login"
 LOGOUT_REDIRECT_URL = "index"
-
-LOGIN_URL = ...
