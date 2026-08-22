@@ -1,12 +1,13 @@
 from django.conf import settings  # type: ignore
 from django.shortcuts import redirect, render, get_object_or_404  # type: ignore
-from django.contrib.auth.decorators import login_required  # type: ignore
+from django.contrib.auth.decorators import login_required, login_not_required  # type: ignore
 from django.contrib.auth import authenticate, login, logout  # type: ignore
 from django.http import Http404, HttpResponse  # type: ignore
 from features.notes.forms import NoteForm  # type: ignore
 from .models import Note
 
 
+@login_not_required
 def index(request):
     if request.method == "GET":
         context = {
@@ -37,6 +38,7 @@ def create_note(request):
         return render(request, "create_note.html", {"form": form})
 
 
+@login_not_required
 def read_note(request, note_id):
     try:
         if request.method == "GET":
