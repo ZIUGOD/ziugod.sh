@@ -13,12 +13,12 @@
                 <span class="my-2 no-select">Hello, {{ user.username }}!</span>
                 <div class="d-flex flex-row align-items-center justify-content-center">
                     <a href="{% url 'create_note' %}" class="btn btn-outline-light m-2">Create new note</a>
-                    <a href="{% url 'logout' %}" class="btn btn-primary m-2">Logout</a>
+                    <a href="{% url 'admin:logout' %}" class="btn btn-primary m-2">Logout</a>
                 </div>
             {% else %}
                 <span class="my-2 no-select">Welcome, guest!</span>
                 <div class="d-flex flex-row align-items-center justify-content-center">
-                    <a href="{% url 'admin' %}" class="btn btn-outline-light m-2">Login</a>
+                    <a href="{% url 'admin:login' %}" class="btn btn-outline-light m-2">Login</a>
                     <a href="#" class="btn btn-primary m-2">Sign-up</a>
                 </div>
             {% endif %}

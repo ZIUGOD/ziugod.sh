@@ -1,6 +1,7 @@
 from django.conf import settings  # type: ignore
 from django.shortcuts import redirect, render, get_object_or_404  # type: ignore
 from django.contrib.auth.decorators import login_required, login_not_required  # type: ignore
+from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout  # type: ignore
 from django.http import Http404, HttpResponse  # type: ignore
 from features.notes.forms import NoteForm  # type: ignore
@@ -107,5 +108,7 @@ def login_view(request):
     return render(request, "index.html")
 
 
+@require_POST
 def logout_view(request):
     logout(request)
+    return redirect("index")
