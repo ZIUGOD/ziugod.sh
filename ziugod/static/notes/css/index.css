@@ -1,0 +1,302 @@
+:root {
+    --notes-purple: #9b5cff;
+    --notes-purple-soft: #b47aff;
+    --notes-purple-rgb: 155, 92, 255;
+}
+
+/* Terminal */
+
+.notes-terminal {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(var(--terminal-green-rgb), 0.55) !important;
+    background:
+        radial-gradient(circle at top right,
+            rgba(var(--notes-purple-rgb), 0.08),
+            transparent 28rem),
+        var(--terminal-surface) !important;
+    box-shadow:
+        0 1rem 3rem rgba(0, 0, 0, 0.6),
+        0 0 2rem rgba(var(--notes-purple-rgb), 0.045) !important;
+}
+
+.notes-terminal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(255, 255, 255, 0.014) 4px);
+}
+
+.notes-terminal>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Top bar */
+
+.notes-terminal-bar {
+    min-height: 2.7rem;
+    border-bottom-color: rgba(var(--terminal-green-rgb), 0.4) !important;
+    background:
+        linear-gradient(90deg,
+            rgba(var(--terminal-green-rgb), 0.03),
+            rgba(var(--notes-purple-rgb), 0.045));
+}
+
+.notes-terminal-bar>span[aria-hidden="true"] {
+    font-size: 0.68rem;
+    text-shadow: 0 0 0.45rem currentColor;
+}
+
+/* Command */
+
+.notes-command {
+    padding-bottom: 1.1rem;
+    border-bottom: 1px dashed rgba(var(--terminal-green-rgb), 0.16);
+}
+
+.notes-command h1 {
+    letter-spacing: 0.01em;
+}
+
+.notes-command .text-success {
+    text-shadow: 0 0 0.65rem rgba(var(--terminal-green-rgb), 0.18);
+}
+
+.notes-path {
+    color: var(--notes-purple-soft);
+    text-shadow: 0 0 0.7rem rgba(var(--notes-purple-rgb), 0.2);
+}
+
+/* List */
+
+.notes-list {
+    counter-reset: note;
+}
+
+.note-entry {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.15rem 0.75rem;
+    border-bottom: 1px solid rgba(139, 154, 142, 0.13);
+    border-radius: 0.6rem;
+    transition:
+        background-color 140ms ease,
+        transform 140ms ease;
+}
+
+.note-entry:hover {
+    background:
+        linear-gradient(90deg,
+            rgba(var(--terminal-green-rgb), 0.055),
+            rgba(var(--notes-purple-rgb), 0.035),
+            transparent);
+}
+
+.note-entry:hover .note-open {
+    color: var(--terminal-green);
+    opacity: 1;
+    transform: translateX(0);
+    text-shadow: 0 0 0.6rem rgba(var(--terminal-green-rgb), 0.4);
+}
+
+.note-entry:last-child {
+    border-bottom: 0;
+}
+
+/* Entire note is clickable */
+
+.note-link {
+    display: inline;
+    color: inherit;
+}
+
+.note-link:hover {
+    background:
+        linear-gradient(90deg,
+            rgba(var(--terminal-green-rgb), 0.055),
+            rgba(var(--notes-purple-rgb), 0.035),
+            transparent);
+    transform: translateX(2px);
+}
+
+/* Index */
+
+.note-index {
+    color: rgba(139, 154, 142, 0.5);
+    font-size: 0.78rem;
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+
+.note-index::before {
+    content: "[";
+}
+
+.note-index::after {
+    content: "]";
+}
+
+/* Main information */
+
+.note-main {
+    min-width: 0;
+}
+
+.note-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    min-width: 0;
+}
+
+.note-prompt {
+    flex-shrink: 0;
+    color: var(--notes-purple-soft);
+    font-weight: 700;
+    text-shadow: 0 0 0.65rem rgba(var(--notes-purple-rgb), 0.3);
+}
+
+.note-title {
+    color: var(--terminal-text);
+    font-size: 1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    transition:
+        color 140ms ease,
+        text-shadow 140ms ease;
+}
+
+.note-link:hover .note-title {
+    color: var(--notes-purple-soft);
+    text-shadow: 0 0 0.7rem rgba(var(--notes-purple-rgb), 0.2);
+}
+
+/* Metadata */
+
+.note-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
+    padding-left: 1.35rem;
+    color: var(--terminal-muted);
+    font-size: 0.78rem;
+}
+
+.note-author {
+    color: var(--terminal-cyan);
+    opacity: 0.85;
+}
+
+.note-meta-separator {
+    opacity: 0.4;
+}
+
+/* NEW */
+
+.note-new {
+    flex-shrink: 0;
+    padding: 0.08rem 0.35rem;
+    border: 1px solid rgba(255, 209, 102, 0.3);
+    border-radius: 0.3rem;
+    color: var(--terminal-amber);
+    background: rgba(255, 209, 102, 0.04);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 0.55rem rgba(255, 209, 102, 0.25);
+}
+
+/* Open indicator */
+
+.note-open {
+    color: var(--terminal-muted);
+    opacity: 0;
+    transform: translateX(-0.35rem);
+    transition:
+        color 140ms ease,
+        opacity 140ms ease,
+        transform 140ms ease;
+}
+
+.note-link:hover .note-open {
+    color: var(--terminal-green);
+    opacity: 1;
+    transform: translateX(0);
+    text-shadow: 0 0 0.6rem rgba(var(--terminal-green-rgb), 0.4);
+}
+
+/* Keyboard navigation */
+
+.note-link:focus-visible {
+    outline: 1px solid var(--terminal-green);
+    outline-offset: 3px;
+    border-radius: 0.15rem;
+}
+
+/* Empty state */
+
+.notes-empty {
+    padding: 4rem 1rem;
+}
+
+.notes-empty-command {
+    margin-bottom: 0.75rem;
+    color: var(--notes-purple-soft);
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+    .notes-terminal-content {
+        padding: 1rem !important;
+    }
+
+    .notes-command h1 {
+        font-size: 0.88rem;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    .note-link {
+        grid-template-columns: 2rem minmax(0, 1fr);
+        gap: 0.6rem;
+        padding-inline: 0.25rem;
+    }
+
+    .note-entry {
+        grid-template-columns: 2rem minmax(0, 1fr);
+        gap: 0.6rem;
+        padding-inline: 0.25rem;
+    }
+
+    .note-open {
+        display: none;
+    }
+
+    .note-title {
+        font-size: 0.95rem;
+    }
+
+    .note-meta {
+        padding-left: 1.2rem;
+        font-size: 0.74rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .note-link,
+    .note-title,
+    .note-open {
+        transition: none;
+    }
+}

@@ -1,44 +1,38 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-bs-theme="dark">
     <head>
-        {% load static %}
         <meta charset="UTF-8" />
-        <meta name="keywords" content="ZIUGOD, notes, web app, personal notes" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="ZIUGOD - my personal web notes app" />
+        <meta name="description"
+              content="ZIUGOD — personal notes and knowledge system" />
         <meta name="author" content="ZIUGOD" />
-        <meta http-equiv="refresh" content="300" />
+        <meta name="theme-color" content="#000000" />
+        <title>ZIUGOD{% block title %}{% endblock %}</title>
         <link rel="icon"
-              type="image/svg+xml"
-              href="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon-filled-256.png" />
-        <title>
-            ZIUGOD
-            {% block title %}{% endblock %}
-        </title>
+              type="image/png"
+              href="{% static 'notes/images/logo.png' %}" />
+        <link rel="stylesheet" href="{% static 'notes/css/base.css' %}" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
               rel="stylesheet"
               integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
               crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+                defer></script>
         {% block head %}{% endblock %}
-        <style>
-            .no-select {
-                user-select: none;
-            }
-        </style>
     </head>
-    <body class="container bg-dark text-light">
-        <header>
-            {% block header %}
-                {% include "components/header.html" %}
-            {% endblock %}
-        </header>
-        <main>
-            {% block main %}{% endblock %}
-        </main>
-        <footer>
-            {% block footer %}
-                {% include "components/footer.html" %}
-            {% endblock %}
-        </footer>
+    <body class="d-flex flex-column min-vh-100 bg-black text-light font-monospace">
+        <a href="#main-content"
+           class="visually-hidden-focusable position-absolute m-2 btn btn-sm btn-success">Skip to content</a>
+        {% block header %}
+            {% include "components/header.html" %}
+        {% endblock %}
+        {% block main %}{% endblock %}
+        {% block footer %}
+            {% include "components/footer.html" %}
+        {% endblock %}
+        {% block scripts %}
+            <script src="{% static 'notes/js/base.js' %}" defer></script>
+        {% endblock %}
     </body>
 </html>

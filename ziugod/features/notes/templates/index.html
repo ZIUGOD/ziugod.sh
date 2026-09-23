@@ -1,21 +1,62 @@
 {% extends "components/base.html" %}
-{% block title %}- Notes{% endblock %}
+{% load static %}
+{% block title %}~ / notes{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'notes/css/index.css' %}" />
+{% endblock %}
 {% block main %}
-    {% autoescape off %}
-        {{ body }}
-    {% endautoescape %}
-    {% if notes %}
-        <ul>
-            {% for note in notes %}
-                <li class="d-flex flex-row">
-                    <a href="{% url 'read_note' note.id %}">{{ note.title }}</a>
-                    {% if note.was_published_recently %}
-                        <span class="no-select text-warning">new</span>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-center m-5">Notes not found.</p>
-    {% endif %}
+    <main id="main-content" class="flex-grow-1">
+        <section class="container my-0 font-monospace" aria-labelledby="notes-title">
+            <div class="notes-terminal border border-success rounded-4 bg-black shadow">
+                <div class="notes-terminal-bar d-flex align-items-center gap-2 px-3 py-2 border-bottom border-success">
+                    <span class="text-danger no-select" aria-hidden="true">●</span>
+                    <span class="text-warning no-select" aria-hidden="true">●</span>
+                    <span class="text-success no-select" aria-hidden="true">●</span>
+                    <span class="ms-2 small text-secondary">notes://archive — terminal viewer</span>
+                </div>
+                <div class="notes-terminal-content p-3 p-md-4">
+                    <div class="notes-command mb-4">
+                        <h1 id="notes-title" class="h5 mb-1 text-light">
+                            <span class="text-success">{% firstof user.username "guest" %}@localhost</span><span class="text-secondary">:</span><span class="notes-path">~/notes</span><span class="text-secondary">$</span>
+                            ls --sort=time
+                        </h1>
+                        <div class="small text-secondary">total {{ notes|length }}</div>
+                    </div>
+                    <ol class="notes-list list-unstyled mb-0" aria-label="Notes archive">
+                        {% for note in notes %}
+                            <li class="note-entry">
+                                <div class="note-index no-select">{{ forloop.counter|stringformat:"02d" }}</div>
+                                <div class="note-main">
+                                    <div class="note-heading">
+                                        <span class="note-prompt" aria-hidden="true">#</span>
+                                        <a href="{% url 'read_note' note.pk %}"
+                                           class="note-link text-decoration-none">
+                                            <span class="note-title">{{ note.title }}</span>
+                                        </a>
+                                        {% if note.was_published_recently %}
+                                            <span class="note-new no-select">NEW</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="note-meta">
+                                        <span class="note-author">{{ note.author }}</span>
+                                        <span class="note-meta-separator" aria-hidden="true">·</span>
+                                        <time datetime="{{ note.created_at|date:'c' }}">
+                                            {{ note.created_at|date:"Y-m-d H:i" }}
+                                        </time>
+                                    </div>
+                                </div>
+                                <span class="note-open no-select" aria-hidden="true">→</span>
+                            </li>
+                        {% empty %}
+                            <li class="notes-empty text-center">
+                                <div class="notes-empty-command">$ ls</div>
+                                <p class="mb-1 text-secondary">directory is empty</p>
+                                <small class="text-success">Process finished with exit code 0.</small>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}

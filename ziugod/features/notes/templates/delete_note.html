@@ -1,14 +1,48 @@
 {% extends "components/base.html" %}
-{% block title %}- Delete note {{ note.id }}{% endblock %}
+{% load static %}
+{% block title %}— ~/note/{{ note.pk }}/delete{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'notes/css/delete_note.css' %}" />
+{% endblock %}
 {% block main %}
-    <h1>Delete Note</h1>
-    <p>Are you sure you want to delete this note?</p>
-    <span class="text-warning">This action cannot be undone.</span>
-    <p>Title: {{ note.title }}</p>
-    <p>Summary: {{ note.age }}</p>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'read_note' note.id %}">Cancel</a>
-    </form>
+    <section class="container mt-0 mb-5 font-monospace"
+             aria-labelledby="delete-note-title">
+        <div class="border border-danger rounded-4 bg-black shadow">
+            <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom border-danger">
+                <span class="text-danger no-select" aria-hidden="true">●</span>
+                <span class="text-warning no-select" aria-hidden="true">●</span>
+                <span class="text-success no-select" aria-hidden="true">●</span>
+                <span class="ms-2 small text-secondary">{{ user }}@localhost: ~/notes</span>
+            </div>
+            <div class="p-5">
+                <h1 id="delete-note-title" class="h5 mb-4 text-light">
+                    <span class="text-success">{{ user }}@localhost</span><span class="text-secondary">:</span><span class="text-primary">~/notes</span><span class="text-secondary">$</span>
+                    rm note_{{ note.pk }}.txt
+                </h1>
+                <p class="mb-2 text-danger" aria-live="polite">rm: remove regular file 'note_{{ note.pk }}.txt'?</p>
+                <div id="delete-note-summary"
+                     class="mb-4 border-start border-danger ps-3 text-break"
+                     aria-live="polite">
+                    <p class="mb-2 text-secondary">target.title=</p>
+                    <p class="mb-0 text-light">{{ note.title }}</p>
+                    <p class="mb-0 text-light">{{ note.note_summary }}</p>
+                </div>
+                <p id="delete-warning" class="mb-4 text-warning" role="alert">warning: this action cannot be undone.</p>
+                <form method="post"
+                      class="d-flex flex-wrap gap-2"
+                      aria-labelledby="delete-note-title"
+                      aria-describedby="delete-warning delete-note-summary">
+                    {% csrf_token %}
+                    <button id="confirm-delete"
+                            type="submit"
+                            class="btn btn-sm btn-outline-danger">[×] confirm_delete</button>
+                    <a href="{% url 'read_note' note.pk %}"
+                       class="btn btn-sm btn-outline-secondary">[&lt;] cancel</a>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/delete_note.js' %}" defer></script>
 {% endblock %}

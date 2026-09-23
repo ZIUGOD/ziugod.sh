@@ -1,27 +1,85 @@
 {% load static %}
-<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
-    <a href="/" class="d-flex align-items-center rounded-circle">
-        <img src="https://cdn-1.webcatalog.io/catalog/hacker-typer/hacker-typer-icon-filled-256.png"
-             alt=""
-             class="no-select rounded-circle"
-             height="90"
-             width="90" />
-    </a>
-    <div class="col-md-3 text-end">
-        <div class="d-flex flex-column align-items-center justify-content-center">
+<header class="container mt-1 mb-2 font-monospace">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-0 p-3 border border-success rounded-4 bg-black shadow">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-3">
+            <a href="/"
+               class="d-flex align-items-center gap-3 text-decoration-none shadow border border-success rounded-circle"
+               aria-label="Home">
+                <img src="{% static 'notes/images/logo.png' %}"
+                     alt="Site avatar"
+                     class="no-select rounded-circle"
+                     width="144"
+                     height="144" />
+            </a>
+            <div class="d-flex flex-column">
+                <div class="text-success fw-bold">
+                    {% if user.is_superuser %}
+                        ROOT://NOTES
+                    {% elif user.is_staff %}
+                        STAFF://NOTES
+                    {% elif user.is_authenticated %}
+                        USER://NOTES
+                    {% else %}
+                        GUEST://NOTES
+                    {% endif %}
+                </div>
+                <small class="text-secondary">personal knowledge system</small>
+            </div>
+        </div>
+        <nav class="text-center text-md-end" aria-label="User navigation">
             {% if user.is_authenticated %}
-                <span class="my-2 no-select">Hello, {{ user.username }}!</span>
-                <div class="d-flex flex-row align-items-center justify-content-center">
-                    <a href="{% url 'create_note' %}" class="btn btn-outline-light m-2">Create new note</a>
-                    <a href="{% url 'admin:logout' %}" class="btn btn-primary m-2">Logout</a>
+                <div class="d-flex flex-column align-items-center gap-3">
+                    <div class="mb-3">
+                        <span class="text-success">
+                            {% if user.is_superuser %}
+                                root
+                            {% elif user.is_staff %}
+                                operator
+                            {% else %}
+                                user
+                            {% endif %}
+                        </span><span class="text-secondary">@localhost:</span><span class="text-primary">~</span><span class="text-secondary">$</span>
+                        whoami
+                        <div class="small text-light">
+                            {{ user.username }}
+                            {% if user.is_superuser %}
+                                <span class="text-danger">[uid=0 | god_mode]</span>
+                            {% elif user.is_staff %}
+                                <span class="text-warning">[staff | sudo_enabled]</span>
+                            {% else %}
+                                <span class="text-success">[authenticated]</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="header-action-stack d-flex flex-column align-items-center align-items-md-end gap-2">
+                        <div class="header-action-row d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
+                            <a href="{% url 'create_note' %}"
+                               class="btn btn-sm btn-outline-success rounded-3">[+] new_note</a>
+                            <form method="post" action="{% url 'admin:logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-3">[x] logout</button>
+                            </form>
+                        </div>
+                        {% if admin.is_staff %}
+                            <div class="header-admin-row">
+                                <a href="{% url 'admin:index' %}"
+                                   class="btn btn-sm btn-outline-warning rounded-3 admin-console-link"
+                                   aria-label="Open admin console">
+                                    <span class="admin-console-prompt" aria-hidden="true">$</span> sudo ./admin_console
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             {% else %}
-                <span class="my-2 no-select">Welcome, guest!</span>
-                <div class="d-flex flex-row align-items-center justify-content-center">
-                    <a href="{% url 'admin:login' %}" class="btn btn-outline-light m-2">Login</a>
-                    <a href="#" class="btn btn-primary m-2">Sign-up</a>
+                <div class="mb-3">
+                    <span class="text-success">guest</span><span class="text-secondary">@localhost:</span><span class="text-primary">~</span><span class="text-secondary">$</span>
+                    session --status
+                    <div class="small text-warning">anonymous [read-only]</div>
                 </div>
+                <a href="{% url 'admin:login' %}"
+                   class="btn btn-sm btn-outline-success rounded-3">[&gt;] authenticate</a>
             {% endif %}
-        </div>
+        </nav>
     </div>
 </header>

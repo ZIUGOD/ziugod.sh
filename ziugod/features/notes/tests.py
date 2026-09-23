@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 from .models import Note
 
 
@@ -21,7 +21,7 @@ class NoteModelTests(TestCase):
     def test_note_summary_truncates_long_content(self):
         note = Note(title="Long title", content="a" * 120)
 
-        self.assertEqual(note.note_summary(), "a" * 100 + "...")
+        self.assertEqual(note.note_summary(), "a" * 128 + "...")
 
 
 class NoteViewTests(TestCase):
@@ -85,3 +85,13 @@ class NoteViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("index"))
         self.assertFalse(Note.objects.filter(pk=note.pk).exists())
+
+
+user = User.objects.create_user(
+    username="John",
+    email="test@gmail.com",
+    password="testpassword",
+)
+
+user.last_name = "Doe"
+user.save()

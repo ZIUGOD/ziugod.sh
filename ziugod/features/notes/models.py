@@ -1,15 +1,16 @@
 import datetime
 
-from django.db import models  # type: ignore[import]
-from django.urls import reverse  # type: ignore[import]
-from django.utils import timezone  # type: ignore[import]
+from django.contrib.auth import get_user_model
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
 
 class Note(models.Model):
     title = models.CharField(
-        max_length=100,
+        max_length=128,
         unique=True,
-        help_text="Note title (Max. length: 100)",
+        help_text="Note title (Max. length: 128)",
     )
 
     content = models.TextField(
@@ -26,13 +27,19 @@ class Note(models.Model):
         help_text="The moment of the last update.",
     )
 
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name="notes",
+    )
+
     # Representation methods
 
     def __str__(self):
         return self.title
 
     def __repr__(self):
-        return f"<Note: {self.title}>"
+        return self.title
 
     def __len__(self):
         return len(self.content)
@@ -44,10 +51,9 @@ class Note(models.Model):
     # Note analysis methods
 
     def age(self):
-        now = timezone.now().replace(microsecond=0)
-        created = self.created_at.replace(microsecond=0)
-
-        delta = now - created
+        delta = timezone.now().replace(microsecond=0) - self.created_at.replace(
+            microsecond=0
+        )
 
         hours, remainder = divmod(delta.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
@@ -55,7 +61,7 @@ class Note(models.Model):
         return f"{hours:02}h {minutes:02}m {seconds:02}s"
 
     def note_summary(self):
-        return self.content[:100] + "..." if len(self.content) > 100 else self.content
+        return self.content[:50] + "..." if len(self.content) > 50 else self.content
 
     def was_published_recently(self):
         now = timezone.now()
@@ -73,8 +79,12 @@ class Note(models.Model):
         db_table = "notes"
 
     @classmethod
-    def create(cls, title, content):
-        note = cls(title=title, content=content)
+    def create(cls, title, content, author):
+        note = cls(
+            title=title,
+            content=content,
+            author=author,
+        )
         note.save()
 
         return note

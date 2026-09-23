@@ -1,8 +1,46 @@
 {% extends "components/base.html" %}
-{% block title %}- {{ note.title|default:"Some note" }}{{ notes.title|length }}{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'notes/css/read_note.css' %}" />
+{% endblock %}
+{% block title %}~/note/{{ note.pk }}{% endblock %}
 {% block main %}
-    <h1>{{ note.title }}</h1>
-    <p>{{ note.content }}</p>
-    <button><a href="{% url 'update_note' note.id %}">Update Note</a></button>
-    <button><a href="{% url 'delete_note' note.id %}">Delete Note</a></button>
+    <article class="container mb-5 font-monospace" aria-labelledby="note-title">
+        <div class="border border-success rounded-4 bg-black shadow">
+            <header class="d-flex align-items-center gap-2 px-3 py-2 border-bottom border-success">
+                <span class="text-danger no-select" aria-hidden="true">●</span>
+                <span class="text-warning no-select" aria-hidden="true">●</span>
+                <span class="text-success no-select" aria-hidden="true">●</span>
+                <span class="ms-2 small text-secondary">notes://archive — terminal viewer</span>
+            </header>
+            <div class="p-5 pt-1">
+                <div class="my-3 text-light">
+                    <span class="text-success">{% firstof note.author user.name %}@localhost</span><span class="text-secondary">:</span><span class="text-primary">~/notes</span><span class="text-secondary">$</span>
+                    cat note_{{ note.pk }}.txt
+                </div>
+                <header class="mb-4 pb-3 border-bottom border-secondary">
+                    <h1 id="note-title" class="h2 mb-3 text-light">
+                        <span class="text-success" aria-hidden="true">#</span>
+                        {{ note.title }}
+                    </h1>
+                </header>
+                <div class="mb-5 text-light lh-lg text-break">{{ note.content|linebreaksbr }}</div>
+                <ul class="list-unstyled small text-secondary">
+                    <li>{{ note.content|length }} {{ note.content|length|pluralize:"character, characters" }}</li>
+                    <li>{{ note.content|wordcount }} {{ note.content|wordcount|pluralize:"word, words" }}</li>
+                </ul>
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-3 border-top border-secondary">
+                    <a href="{% url 'index' %}" class="btn btn-sm btn-outline-secondary">[&lt;] cd ..</a>
+                    {% if is_author %}
+                        <nav class="d-flex flex-wrap gap-2" aria-label="Note actions">
+                            <a href="{% url 'update_note' note.pk %}"
+                               class="btn btn-sm btn-outline-warning">[~] edit</a>
+                            <a href="{% url 'delete_note' note.pk %}"
+                               class="btn btn-sm btn-outline-danger">[×] delete</a>
+                        </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </article>
 {% endblock %}
