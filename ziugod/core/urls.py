@@ -17,8 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("features.notes.urls")),
+    # default django auth system. Includes login, logout, password_change and password_reset,
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

@@ -55,7 +55,7 @@
                         <div class="header-action-row d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
                             <a href="{% url 'create_note' %}"
                                class="btn btn-sm btn-outline-success rounded-3">[+] new_note</a>
-                            <form method="post" action="{% url 'admin:logout' %}">
+                            <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-sm btn-outline-danger rounded-3">[x] logout</button>
                             </form>
@@ -77,7 +77,7 @@
                     session --status
                     <div class="small text-warning">anonymous [read-only]</div>
                 </div>
-                <a href="{% url 'admin:login' %}"
+                <a href="{% url 'login' %}"
                    class="btn btn-sm btn-outline-success rounded-3">[&gt;] authenticate</a>
             {% endif %}
         </nav>
