@@ -1,0 +1,277 @@
+:root {
+    --note-purple: #9b5cff;
+    --note-purple-soft: #b47aff;
+    --note-purple-rgb: 155, 92, 255;
+}
+
+/* Main terminal */
+
+#create-note-title {
+    position: relative;
+}
+
+section[aria-labelledby="create-note-title"]>div {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(var(--terminal-green-rgb), 0.65) !important;
+    background:
+        radial-gradient(circle at top right,
+            rgba(var(--note-purple-rgb), 0.09),
+            transparent 26rem),
+        radial-gradient(circle at bottom left,
+            rgba(var(--terminal-green-rgb), 0.045),
+            transparent 30rem),
+        var(--terminal-surface) !important;
+    box-shadow:
+        0 0 0 1px rgba(var(--terminal-green-rgb), 0.04),
+        0 1rem 3rem rgba(0, 0, 0, 0.65),
+        0 0 2rem rgba(var(--note-purple-rgb), 0.055) !important;
+}
+
+section[aria-labelledby="create-note-title"]>div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.15;
+    background-image: repeating-linear-gradient(to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(255, 255, 255, 0.018) 4px);
+}
+
+section[aria-labelledby="create-note-title"]>div>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Terminal bar */
+
+section[aria-labelledby="create-note-title"]>div>div:first-child {
+    min-height: 2.65rem;
+    background:
+        linear-gradient(90deg,
+            rgba(var(--terminal-green-rgb), 0.035),
+            rgba(var(--note-purple-rgb), 0.055));
+    border-bottom-color: rgba(var(--terminal-green-rgb), 0.5) !important;
+}
+
+section[aria-labelledby="create-note-title"]>div>div:first-child>span[aria-hidden="true"] {
+    font-size: 0.7rem;
+    text-shadow: 0 0 0.45rem currentColor;
+}
+
+/* Command prompt */
+
+#create-note-title {
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(var(--terminal-green-rgb), 0.18);
+    letter-spacing: 0.01em;
+}
+
+#create-note-title .text-success {
+    text-shadow: 0 0 0.7rem rgba(var(--terminal-green-rgb), 0.2);
+}
+
+#create-note-title .text-primary {
+    color: var(--note-purple-soft) !important;
+    text-shadow: 0 0 0.7rem rgba(var(--note-purple-rgb), 0.24);
+}
+
+#create-note-title::after {
+    content: "_";
+    display: inline-block;
+    margin-left: 0.35rem;
+    color: var(--terminal-green);
+    font-weight: 700;
+    text-shadow: 0 0 0.55rem rgba(var(--terminal-green-rgb), 0.55);
+    animation: create-note-cursor 1.1s steps(1, end) infinite;
+}
+
+/* Form */
+
+section[aria-labelledby="create-note-title"] form {
+    position: relative;
+}
+
+section[aria-labelledby="create-note-title"] .form-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+}
+
+section[aria-labelledby="create-note-title"] .form-label::before {
+    content: "> ";
+    color: var(--terminal-green);
+}
+
+/* Inputs */
+
+section[aria-labelledby="create-note-title"] .form-control {
+    border-color: rgba(var(--terminal-green-rgb), 0.32);
+    background:
+        linear-gradient(90deg,
+            rgba(var(--terminal-green-rgb), 0.015),
+            rgba(var(--note-purple-rgb), 0.015)),
+        var(--terminal-surface);
+    color: var(--terminal-text);
+    font-family: inherit;
+    border-radius: 0.55rem;
+    transition:
+        border-color 140ms ease,
+        box-shadow 140ms ease,
+        background-color 140ms ease;
+}
+
+section[aria-labelledby="create-note-title"] .form-control:hover {
+    border-color: rgba(var(--terminal-green-rgb), 0.5);
+}
+
+section[aria-labelledby="create-note-title"] .form-control:focus {
+    border-color: var(--terminal-green);
+    background-color: #020302;
+    box-shadow:
+        0 0 0 0.2rem rgba(var(--terminal-green-rgb), 0.08),
+        0 0 1rem rgba(var(--terminal-green-rgb), 0.08);
+}
+
+section[aria-labelledby="create-note-title"] input.form-control {
+    min-height: 2.8rem;
+}
+
+section[aria-labelledby="create-note-title"] textarea.form-control {
+    min-height: 18rem;
+    line-height: 1.65;
+}
+
+/* Selection inside editor */
+
+section[aria-labelledby="create-note-title"] .form-control::selection {
+    color: #000;
+    background: var(--note-purple-soft);
+}
+
+/* Errors */
+
+section[aria-labelledby="create-note-title"] .errorlist {
+    margin: 0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--terminal-red);
+    font-size: 0.82rem;
+}
+
+section[aria-labelledby="create-note-title"] .errorlist li::before {
+    content: "[error] ";
+    font-weight: 700;
+}
+
+section[aria-labelledby="create-note-title"] .errorlist li {
+    text-shadow: 0 0 0.5rem rgba(255, 92, 108, 0.18);
+}
+
+/* Buttons */
+
+section[aria-labelledby="create-note-title"] .btn {
+    font-family: inherit;
+    border-radius: 0.45rem;
+    letter-spacing: 0.025em;
+    transition:
+        color 140ms ease,
+        background-color 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease,
+        transform 140ms ease;
+}
+
+section[aria-labelledby="create-note-title"] .btn:hover {
+    transform: translateY(-1px);
+}
+
+section[aria-labelledby="create-note-title"] .btn-outline-success:hover {
+    box-shadow:
+        0 0 0 1px rgba(var(--terminal-green-rgb), 0.16),
+        0 0 1rem rgba(var(--terminal-green-rgb), 0.18);
+}
+
+section[aria-labelledby="create-note-title"] .btn-outline-secondary:hover {
+    border-color: var(--note-purple-soft);
+    background-color: rgba(var(--note-purple-rgb), 0.08);
+    color: var(--note-purple-soft);
+    box-shadow: 0 0 0.8rem rgba(var(--note-purple-rgb), 0.12);
+}
+
+/* Editor details */
+
+section[aria-labelledby="create-note-title"] form>div.my-5 {
+    position: relative;
+}
+
+section[aria-labelledby="create-note-title"] form>div.my-5::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1.4rem;
+    width: 100%;
+    border-bottom: 1px dashed rgba(var(--terminal-green-rgb), 0.08);
+}
+
+/* Cursor */
+
+@keyframes create-note-cursor {
+
+    0%,
+    48% {
+        opacity: 1;
+    }
+
+    49%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+    section[aria-labelledby="create-note-title"]>div>.p-5 {
+        padding: 1rem !important;
+    }
+
+    #create-note-title {
+        margin-bottom: 2rem !important;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    section[aria-labelledby="create-note-title"] form>div.my-5 {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    section[aria-labelledby="create-note-title"] textarea.form-control {
+        min-height: 14rem;
+    }
+
+    section[aria-labelledby="create-note-title"] form>div:last-child {
+        width: 100%;
+    }
+
+    section[aria-labelledby="create-note-title"] .btn {
+        flex: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #create-note-title::after {
+        animation: none;
+        opacity: 1;
+    }
+
+    section[aria-labelledby="create-note-title"] .form-control,
+    section[aria-labelledby="create-note-title"] .btn {
+        transition: none;
+    }
+}

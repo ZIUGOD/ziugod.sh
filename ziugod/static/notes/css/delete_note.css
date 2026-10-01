@@ -1,0 +1,252 @@
+:root {
+    --delete-purple: #9b5cff;
+    --delete-purple-soft: #b47aff;
+    --delete-purple-rgb: 155, 92, 255;
+    --delete-red-rgb: 255, 92, 108;
+}
+
+/* Main terminal */
+
+section[aria-labelledby="delete-note-title"]>div {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(var(--delete-red-rgb), 0.72) !important;
+    background:
+        radial-gradient(circle at top right,
+            rgba(var(--delete-red-rgb), 0.09),
+            transparent 24rem),
+        radial-gradient(circle at bottom left,
+            rgba(var(--delete-purple-rgb), 0.06),
+            transparent 28rem),
+        var(--terminal-surface) !important;
+    box-shadow:
+        0 0 0 1px rgba(var(--delete-red-rgb), 0.05),
+        0 1rem 3rem rgba(0, 0, 0, 0.68),
+        0 0 2rem rgba(var(--delete-red-rgb), 0.06) !important;
+}
+
+section[aria-labelledby="delete-note-title"]>div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: repeating-linear-gradient(to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(255, 255, 255, 0.018) 4px);
+}
+
+section[aria-labelledby="delete-note-title"]>div>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* Terminal bar */
+
+section[aria-labelledby="delete-note-title"]>div>div:first-child {
+    min-height: 2.65rem;
+    border-bottom-color: rgba(var(--delete-red-rgb), 0.55) !important;
+    background:
+        linear-gradient(90deg,
+            rgba(var(--delete-red-rgb), 0.05),
+            rgba(var(--delete-purple-rgb), 0.045));
+}
+
+section[aria-labelledby="delete-note-title"]>div>div:first-child>span[aria-hidden="true"] {
+    font-size: 0.7rem;
+    text-shadow: 0 0 0.45rem currentColor;
+}
+
+/* Command */
+
+#delete-note-title {
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(var(--delete-red-rgb), 0.2);
+    letter-spacing: 0.01em;
+}
+
+#delete-note-title .text-success {
+    text-shadow: 0 0 0.7rem rgba(var(--terminal-green-rgb), 0.2);
+}
+
+#delete-note-title .text-primary {
+    color: var(--delete-purple-soft) !important;
+    text-shadow: 0 0 0.7rem rgba(var(--delete-purple-rgb), 0.22);
+}
+
+#delete-note-title::after {
+    content: "_";
+    display: inline-block;
+    margin-left: 0.35rem;
+    color: var(--terminal-red);
+    font-weight: 700;
+    text-shadow: 0 0 0.6rem rgba(var(--delete-red-rgb), 0.6);
+    animation: delete-terminal-cursor 0.9s steps(1, end) infinite;
+}
+
+/* rm prompt */
+
+section[aria-labelledby="delete-note-title"] .text-danger {
+    text-shadow: 0 0 0.65rem rgba(var(--delete-red-rgb), 0.18);
+}
+
+/* Target summary */
+
+#delete-note-summary {
+    position: relative;
+    padding: 1rem 1rem 1rem 1.25rem !important;
+    border-left-color: rgba(var(--delete-red-rgb), 0.75) !important;
+    background:
+        linear-gradient(90deg,
+            rgba(var(--delete-red-rgb), 0.06),
+            rgba(var(--delete-purple-rgb), 0.025),
+            transparent);
+}
+
+#delete-note-summary::before {
+    content: "TARGET";
+    position: absolute;
+    top: -0.55rem;
+    right: 0.75rem;
+    padding-inline: 0.4rem;
+    background: var(--terminal-surface);
+    color: var(--terminal-red);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+#delete-note-summary .text-secondary {
+    font-size: 0.82rem;
+    letter-spacing: 0.045em;
+}
+
+#delete-note-summary .text-light {
+    line-height: 1.55;
+}
+
+#delete-note-summary .text-light+.text-light {
+    margin-top: 0.5rem;
+    color: var(--terminal-muted) !important;
+}
+
+/* Warning */
+
+#delete-warning {
+    display: inline-block;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid rgba(255, 209, 102, 0.22);
+    border-radius: 0.4rem;
+    background: rgba(255, 209, 102, 0.035);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 0.6rem rgba(255, 209, 102, 0.18);
+}
+
+/* Actions */
+
+section[aria-labelledby="delete-note-title"] .btn {
+    font-family: inherit;
+    border-radius: 0.45rem;
+    letter-spacing: 0.025em;
+    transition:
+        color 140ms ease,
+        background-color 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease,
+        transform 140ms ease;
+}
+
+section[aria-labelledby="delete-note-title"] .btn:hover {
+    transform: translateY(-1px);
+}
+
+#confirm-delete {
+    position: relative;
+}
+
+#confirm-delete:hover {
+    box-shadow:
+        0 0 0 1px rgba(var(--delete-red-rgb), 0.18),
+        0 0 1rem rgba(var(--delete-red-rgb), 0.22);
+}
+
+section[aria-labelledby="delete-note-title"] .btn-outline-secondary:hover {
+    border-color: var(--delete-purple-soft);
+    background-color: rgba(var(--delete-purple-rgb), 0.08);
+    color: var(--delete-purple-soft);
+    box-shadow: 0 0 0.8rem rgba(var(--delete-purple-rgb), 0.12);
+}
+
+/* Subtle danger glow */
+
+section[aria-labelledby="delete-note-title"] form::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1.5rem;
+    width: 8rem;
+    height: 1px;
+    background: linear-gradient(90deg,
+            rgba(var(--delete-red-rgb), 0.5),
+            transparent);
+}
+
+section[aria-labelledby="delete-note-title"] form {
+    position: relative;
+}
+
+/* Cursor */
+
+@keyframes delete-terminal-cursor {
+
+    0%,
+    48% {
+        opacity: 1;
+    }
+
+    49%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+    section[aria-labelledby="delete-note-title"]>div>.p-5 {
+        padding: 1rem !important;
+    }
+
+    #delete-note-title {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    #delete-note-summary {
+        padding: 0.85rem !important;
+        padding-left: 1rem !important;
+    }
+
+    section[aria-labelledby="delete-note-title"] form {
+        width: 100%;
+    }
+
+    section[aria-labelledby="delete-note-title"] .btn {
+        flex: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #delete-note-title::after {
+        animation: none;
+        opacity: 1;
+    }
+
+    section[aria-labelledby="delete-note-title"] .btn {
+        transition: none;
+    }
+}
