@@ -3,14 +3,13 @@
 from os import getenv, path
 from pathlib import Path
 
-from dotenv import load_dotenv  # type: ignore
-from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = getenv("SECRET_KEY", get_random_secret_key())
+SECRET_KEY = getenv("SECRET_KEY")
 
 ALLOWED_HOSTS = [
     host.strip() for host in getenv("ALLOWED_HOSTS", "").split(",") if host.strip()
